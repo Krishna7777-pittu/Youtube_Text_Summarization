@@ -1,0 +1,3 @@
+AIzaSyDbY0TDHspJDYleSCQgO_abNlj4Gkqm8zQ
+
+credentials_path = r'C:\\Users\\krish\\OneDrive\\Desktop\\myfirstproject01.json'

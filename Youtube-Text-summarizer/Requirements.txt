@@ -1,0 +1,11 @@
+Flask==2.0.1
+transformers==4.11.3
+torch==1.10.0
+soundfile==0.10.3.post1
+librosa==0.8.1
+pytube==10.0.0
+langdetect==1.0.9
+language-tool-python==2.6.1
+google-cloud-speech==2.8.0
+googletrans==4.0.0-rc1
+ffmpeg-python==0.2.0

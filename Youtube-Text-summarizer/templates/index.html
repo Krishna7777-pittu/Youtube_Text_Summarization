@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Summarizer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        #result_section {
+            display: none;
+            margin-top: 20px;
+        }
+
+        #result_text {
+            resize: none;
+        }
+
+        #loading_spinner {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>YouTube Text Summarizer</h1>
+    <form id="summarizeForm" action="/process_video" method="post">
+        <label for="youtube_url">Enter YouTube URL:</label><br>
+        <input type="text" id="youtube_url" name="youtube_url" placeholder="https://www.youtube.com/watch?v=FAyKDaXEAgc" required>
+        <br><br>
+        <input type="submit" value="Summarize">
+    </form>
+
+    <!-- Loading Spinner -->
+    <div id="loading_spinner">
+        <!-- Replace "loading.gif" with the correct path to your loading spinner image -->
+        <img src="loading.gif" alt="Loading..." width="50" height="50">
+    </div>
+
+    <!-- Result Section -->
+    <div id="result_section">
+        <h2>Summarized Video:</h2>
+        <p id="result_text"></p>
+    </div>
+
+    <script>
+        document.getElementById('summarizeForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevents the default form submission
+    
+            // Display the loading spinner
+            document.getElementById('loading_spinner').style.display = 'block';
+    
+            var formData = new FormData(this);
+    
+            fetch('/process_video', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Hide the loading spinner
+                document.getElementById('loading_spinner').style.display = 'none';
+    
+                // Check if the response has an error
+                if (data.error) {
+                    alert(data.error);  // Display the error message to the user
+                } else {
+                    // Display the result section and set the result text
+                    document.getElementById('result_section').style.display = 'block';
+                    document.getElementById('result_text').innerText = data.summary;
+                }
+            })
+            .catch(error => {
+                // Hide the loading spinner
+                document.getElementById('loading_spinner').style.display = 'none';
+    
+                // Display a generic error message to the user
+                alert('An error occurred while summarizing the video. Please try again.');
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
